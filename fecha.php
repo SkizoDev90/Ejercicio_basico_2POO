@@ -4,7 +4,7 @@
         public function __construct($fecha) {
             $this->fecha = $fecha;
         }
-        public function mostrar($meses): void{
+        public function mostrar($meses): string{
             $arrayFecha = [];
             $arrayFecha=explode("-",$this->fecha);  //paso la fecha a un array
             foreach ($meses as $indice=>$value) {
@@ -12,10 +12,10 @@
                     $arrayFecha[1]=$value[0];                           //cargamos en el mes el string correspondiente
                     if($this->comprobar($arrayFecha[0]) && $arrayFecha[1]=="Febrero"){          //pasamos a comprobar si es bisiesto y febrero
                         $salida=implode("/",$arrayFecha);                           //volvemos el array un string
-                        echo $salida."<br>"."Es bisiesto y tiene ".($value[1]+1)." dias";    
+                        return $salida . "<br>Es bisiesto y tiene " . ($value[1] + 1) . " dias";    
                     }else if(!$this->comprobar($arrayFecha[0])){    //y si no es bisitesto....
                         $salida=implode("/",$arrayFecha);
-                        echo $salida."<br>"."No es bisiesto y tiene ".$value[1]."dias";
+                        return $salida." <br>No es bisiesto y tiene ".$value[1]." dias";
                     };
                 }
             }

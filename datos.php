@@ -16,5 +16,6 @@
         ["Diciembre", 31]
     ];
     $resultado=new Fecha($fecha);
-    $resultado->mostrar($meses);
+    $out=$resultado->mostrar($meses);
+    echo $out;
 ?>
