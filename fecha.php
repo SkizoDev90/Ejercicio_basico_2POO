@@ -1,12 +1,7 @@
 <?php
     class Fecha{
         public $fecha;
-        public function __construct($fecha) {
-            $this->fecha = $fecha;
-        }
-
-        public function mostrar(): void{
-            $meses = [
+        private $meses = [
                 1=>["nombre"=>"Enero", "dias"=>31],
                 2=>["nombre"=>"Febrero","dias"=>28],
                 3=>["nombre"=>"Marzo","dias"=>31],
@@ -19,31 +14,34 @@
                 10=>["nombre"=>"Octubre","dias"=>31],
                 11=>["nombre"=>"Noviembre","dias"=>30],
                 12=>["nombre"=>"Diciembre","dias"=>31]
-                ];
+            ];
+        public function __construct($fecha) {
+            $this->fecha = $fecha;
+        }
 
+        public function mostrar(){
             $arrayFecha=explode("-",$this->fecha);  //paso la fecha a un array
 
             if($this->comprobar($arrayFecha[0])){   //comprobamos si es bisiesto para saber si cambiar el array
-                $this->cambiarArray($meses);
+                $this->cambiarArray();
             }
-
-            foreach ($meses as $indice => $value) {
+            foreach ($this->meses as $indice => $value) {
                 if ($indice == $arrayFecha[1]) {                                    // si el índice coincide con el mes...
                     $arrayFecha[1] = $value["nombre"];                              // cambiamos el número por el nombre
                     $salida = implode("/", $arrayFecha);          // volvemos el array un string
                     
-                    if ($this->comprobar($arrayFecha[0]) && $value["nombre"] == "Febrero") {
-                        echo $salida . "<br> Es bisiesto y tiene " . $value["dias"] . " días";
+                    if ($this->comprobar($arrayFecha[0]) && $value["nombre"] == "Febrero") { //comprobamos 
+                        return $salida . "<br> Es bisiesto y tiene " . $value["dias"] . " días";
                     } else if ($this->comprobar($arrayFecha[0]) && $value["nombre"] != "Febrero") {
-                        echo $salida . "<br> Es bisiesto y este mes tiene " . $value["dias"] . " días" . " y ".$meses[2]["nombre"]." tiene ".$meses[2]["dias"]." dias";
+                        return $salida . "<br> Es bisiesto y este mes tiene " . $value["dias"] . " días" . " y ".$this->meses[2]["nombre"]." tiene ".$this->meses[2]["dias"]." dias";
                     } else if(!$this->comprobar($arrayFecha[0])){
-                        echo $salida . "<br> No es bisiesto y este mes tiene " . $value["dias"] . " días" . " y ".$meses[2]["nombre"]." tiene ".$meses[2]["dias"]." dias";
+                        return $salida . "<br> No es bisiesto y este mes tiene " . $value["dias"] . " días" . " y ".$this->meses[2]["nombre"]." tiene ".$this->meses[2]["dias"]." dias";
                     }
                 }
             }
         }
-        private function cambiarArray(&$meses){
-            $meses[2]["dias"]=29;
+        private function cambiarArray(){
+            $this->meses[2]["dias"]=29;
         }
         private function comprobar($anio): bool{
             if($anio%4 == 0 && $anio % 100 != 0 || ($anio % 400 == 0)){
